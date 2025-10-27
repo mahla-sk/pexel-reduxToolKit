@@ -7,8 +7,10 @@ import { fetchImages, setMainImg } from "./imageSlice.ts";
 import "./App.css";
 
 const App: React.FC = () => {
+  //react.fc is a type for functional components in react with typescript
   const dispatch = useDispatch<AppDispatch>();
   const { images, mainImg, loading } = useSelector(
+    //useselector reads data from the store, and destructure the data into these variables that are shown in the ui
     (state: RootState) => state.images
   );
   const [query, setQuery] = React.useState("");

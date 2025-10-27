@@ -6,17 +6,18 @@ import {
 import axios from "axios";
 
 interface Image {
+  //defines the img type and what each object contains
   id: number;
   src: {
     small: string;
     medium: string;
     large: string;
   };
-  photographer: string;
 }
 
 interface ImageState {
-  images: Image[];
+  //defines the state
+  images: Image[]; //the thumbnails
   mainImg: Image | null;
   loading: boolean;
 }
@@ -29,6 +30,7 @@ const initialState: ImageState = {
 
 //fetching images from api
 export const fetchImages = createAsyncThunk(
+  //is an async action creator that returns a thunk action, a thunk is a function that wraps an expression to delay its evaluation
   "images/fetchImages",
   async (query: string) => {
     const response = await axios.get(
@@ -44,13 +46,13 @@ export const fetchImages = createAsyncThunk(
   }
 );
 
-//creating the slice
+//creating the slice that generates action creators for the functions in the reducers
 const imageSlice = createSlice({
   name: "images",
   initialState,
   reducers: {
     setMainImg(state, action: PayloadAction<Image>) {
-      state.mainImg = action.payload;
+      state.mainImg = action.payload; //sets the main image when a thumbnail is clicked
     },
   },
   extraReducers: (builder) => {
@@ -68,5 +70,5 @@ const imageSlice = createSlice({
   },
 });
 
-export const { setMainImg } = imageSlice.actions;
-export default imageSlice.reducer;
+export const { setMainImg } = imageSlice.actions; //exporting the action creators
+export default imageSlice.reducer; //exporting the reducer to be used in the store, its the actual function that changes the state
