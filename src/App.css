@@ -1,0 +1,88 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #151e3d;
+  font-family: Arial, sans-serif;
+}
+
+/* Search bar */
+.App input {
+  padding: 8px 12px;
+  font-size: 16px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  margin-bottom: 20px;
+}
+
+.App button {
+  margin-left: 10px;
+  padding: 8px 14px;
+  font-size: 16px;
+  border: none;
+  background-color: #555e50;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.App button:hover {
+  background-color: #0056b3;
+}
+
+/* Main image */
+.mainImg {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 30px;
+  min-height: 60vh;
+  color: white;
+}
+
+.mainImg img {
+  max-width: 80%;
+  max-height: 70vh;
+  border-radius: 12px;
+  border: 5px solid #555e50;
+  box-shadow: #555e50 0px 0px 10px;
+  object-fit: contain;
+}
+.loading {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+/* Thumbnails at bottom */
+.thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding-bottom: 20px;
+}
+
+.thumbnails img {
+  width: 100px;
+  height: 100px;
+  border-radius: 10px;
+  object-fit: cover;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.thumbnails img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
