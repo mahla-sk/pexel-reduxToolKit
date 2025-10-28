@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
-interface Image {
+export interface Image {
   //defines the img type and what each object contains
   id: number;
   src: {
@@ -60,6 +60,7 @@ const imageSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchImages.fulfilled, (state, action) => {
+      console.log("fetched stuff", action.payload);
       state.images = action.payload;
       state.mainImg = action.payload[0];
       state.loading = false;

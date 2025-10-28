@@ -1,10 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import type { RootState, AppDispatch } from "./store.ts";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect } from "react";
-import { fetchImages, setMainImg } from "./imageSlice.ts";
+import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import Images from "./components/images.tsx";
+import SearchBar from "./components/searchBar.tsx";
+import { fetchImages } from "./imageSlice.ts";
+import type { AppDispatch, RootState } from "./store.ts";
 
 const App: React.FC = () => {
   //react.fc is a type for functional components in react with typescript
@@ -13,9 +13,8 @@ const App: React.FC = () => {
     //useselector reads data from the store, and destructure the data into these variables that are shown in the ui
     (state: RootState) => state.images
   );
-  const [query, setQuery] = React.useState("");
 
-  const search = () => {
+  const search = (query: string) => {
     if (query.trim() !== "") {
       dispatch(fetchImages(query));
     }
@@ -23,31 +22,8 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <input
-        type="text"
-        value={query}
-        placeholder="search for an image..."
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <button onClick={search}>Search</button>
-      <div className="mainImg">
-        {loading ? (
-          <p>Loading...</p>
-        ) : mainImg ? (
-          <img src={mainImg.src.large} />
-        ) : (
-          <p>No image selected</p>
-        )}
-      </div>
-      <div className="thumbnails">
-        {images.map((img) => (
-          <img
-            key={img.id}
-            src={img.src.small}
-            onClick={() => dispatch(setMainImg(img))}
-          ></img>
-        ))}
-      </div>
+      <SearchBar search={search} />
+      <Images images={images} mainImg={mainImg} loading={loading} />
     </div>
   );
 };
