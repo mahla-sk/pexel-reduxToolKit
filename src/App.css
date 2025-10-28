@@ -1,3 +1,14 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+body {
+  background-color: #0f1a3c;
+  min-height: 100vh;
+}
 .App {
   display: flex;
   flex-direction: column;
@@ -7,6 +18,7 @@
   padding: 20px;
   background-color: #151e3d;
   font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 /* Search bar */
@@ -33,7 +45,7 @@
 }
 
 .App button:hover {
-  background-color: #0056b3;
+  background-color: #181b16;
 }
 
 /* Main image */
@@ -85,4 +97,45 @@
 .thumbnails img:hover {
   transform: scale(1.05);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+}
+.thumbnail-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.fav-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  color: white;
+  text-shadow: 0 0 3px black;
+}
+
+.favorites {
+  color: white;
+  display: flex;
+  white-space: nowrap;
+  padding: 10px;
+  width: 100vw;
+  box-sizing: border-box;
+  gap: 10px;
+  overflow-x: auto;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.favorites img {
+  border-radius: 20px;
+  height: 100px;
+  flex-shrink: 0;
+}
+.more {
+  width: auto;
+  height: auto;
+  color: white;
+  background-color: #555e50;
 }

@@ -2,30 +2,41 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import Images from "./components/images.tsx";
-import SearchBar from "./components/searchBar.tsx";
+import SearchBar from "./components/TopBar.tsx";
 import { fetchImages } from "./imageSlice.ts";
 import type { AppDispatch, RootState } from "./store.ts";
+import { useState } from "react";
 
 const App: React.FC = () => {
-  //react.fc is a type for functional components in react with typescript
   const dispatch = useDispatch<AppDispatch>();
-  const { images, mainImg, loading } = useSelector(
-    //useselector reads data from the store, and destructure the data into these variables that are shown in the ui
+  const { images, mainImg, loading, totalResults } = useSelector(
     (state: RootState) => state.images
   );
 
-  const search = (query: string) => {
-    if (query.trim() !== "") {
-      dispatch(fetchImages(query));
+  const [query, setQuery] = useState("");
+  const [page, setPage] = useState(1);
+
+  const search = (newQuery: string) => {
+    if (newQuery.trim() !== "") {
+      setQuery(newQuery);
+      setPage(1);
+      dispatch(fetchImages({ query: newQuery, page: 1 }));
     }
   };
 
   return (
     <div className="App">
       <SearchBar search={search} />
-      <Images images={images} mainImg={mainImg} loading={loading} />
+      <Images
+        images={images}
+        mainImg={mainImg}
+        loading={loading}
+        totalResults={totalResults}
+        query={query}
+        page={page}
+        setPage={setPage}
+      />
     </div>
   );
 };
-
 export default App;

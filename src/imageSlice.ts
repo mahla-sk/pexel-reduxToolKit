@@ -20,21 +20,29 @@ interface ImageState {
   images: Image[]; //the thumbnails
   mainImg: Image | null;
   loading: boolean;
+  favorites: Image[];
+  totalResults: number;
+  visibleStart: number;
+  visibleEnd: number;
 }
 
 const initialState: ImageState = {
   images: [],
   mainImg: null,
   loading: false,
+  favorites: JSON.parse(localStorage.getItem("favorites") || "[]"),
+  totalResults: 0,
+  visibleStart: 0,
+  visibleEnd: 9,
 };
 
 //fetching images from api
 export const fetchImages = createAsyncThunk(
   //is an async action creator that returns a thunk action, a thunk is a function that wraps an expression to delay its evaluation
   "images/fetchImages",
-  async (query: string) => {
+  async ({ query, page }: { query: string; page: number }) => {
     const response = await axios.get(
-      `https://api.pexels.com/v1/search?query=${query}&per_page=10`,
+      `https://api.pexels.com/v1/search?query=${query}&per_page=10&page=${page}`,
       {
         headers: {
           Authorization:
@@ -42,7 +50,10 @@ export const fetchImages = createAsyncThunk(
         },
       }
     );
-    return response.data.photos;
+    return {
+      photos: response.data.photos,
+      totalResults: response.data.total_results,
+    };
   }
 );
 
@@ -54,22 +65,45 @@ const imageSlice = createSlice({
     setMainImg(state, action: PayloadAction<Image>) {
       state.mainImg = action.payload; //sets the main image when a thumbnail is clicked
     },
+    toggleFavorite(state, action: PayloadAction<Image>) {
+      const existingIndex = state.favorites.find(
+        (img) => img.id === action.payload.id
+      );
+      if (existingIndex !== undefined) {
+        //if the image is already in favorites, remove it
+        state.favorites = state.favorites.filter(
+          (img) => img.id !== action.payload.id
+        );
+      } else {
+        //else add it to favorites
+        state.favorites.push(action.payload);
+      }
+      localStorage.setItem("favorites", JSON.stringify(state.favorites)); //persist favorites in local storage
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.pending, (state) => {
       state.loading = true;
     });
     builder.addCase(fetchImages.fulfilled, (state, action) => {
-      console.log("fetched stuff", action.payload);
-      state.images = action.payload;
-      state.mainImg = action.payload[0];
+      if (action.meta.arg.page === 1) {
+        // New search to replace images
+        state.images = action.payload.photos;
+      } else {
+        // Load more to append
+        state.images = [...state.images, ...action.payload.photos];
+      }
+
+      if (!state.mainImg) state.mainImg = action.payload.photos[0];
+      state.totalResults = action.payload.totalResults;
       state.loading = false;
     });
+
     builder.addCase(fetchImages.rejected, (state) => {
       state.loading = false;
     });
   },
 });
 
-export const { setMainImg } = imageSlice.actions; //exporting the action creators
+export const { setMainImg, toggleFavorite } = imageSlice.actions; //exporting the action creators
 export default imageSlice.reducer; //exporting the reducer to be used in the store, its the actual function that changes the state
