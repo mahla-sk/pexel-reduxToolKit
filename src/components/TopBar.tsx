@@ -13,6 +13,11 @@ const SearchBar: React.FC<searchProps> = ({ search }) => {
         value={query}
         placeholder="search for an image..."
         onChange={(e) => setQuery(e.target.value)}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") {
+            search(query);
+          }
+        }}
       />
       <button onClick={() => search(query)}>Search</button>
     </div>

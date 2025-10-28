@@ -3,9 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import Images from "./components/images.tsx";
 import SearchBar from "./components/TopBar.tsx";
+import FavoritesPage from "./components/FavoritesPage.tsx";
 import { fetchImages } from "./imageSlice.ts";
 import type { AppDispatch, RootState } from "./store.ts";
 import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,18 +27,37 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="App">
-      <SearchBar search={search} />
-      <Images
-        images={images}
-        mainImg={mainImg}
-        loading={loading}
-        totalResults={totalResults}
-        query={query}
-        page={page}
-        setPage={setPage}
-      />
-    </div>
+    <Router>
+      <div className="App">
+        <SearchBar search={search} />
+        <div className="nav-links">
+          <Link to="/" className="nav-btn">
+            Home
+          </Link>
+          <Link to="/favorites" className="nav-btn">
+            Favorites
+          </Link>
+        </div>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Images
+                images={images}
+                mainImg={mainImg}
+                loading={loading}
+                totalResults={totalResults}
+                query={query}
+                page={page}
+                setPage={setPage}
+              />
+            }
+          />
+          <Route path="/favorites" element={<FavoritesPage />} />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 export default App;

@@ -98,6 +98,7 @@ const imageSlice = createSlice({
       if (action.meta.arg.page === 1) {
         // New search to replace images
         state.images = action.payload.photos;
+        state.mainImg = action.payload.photos[0];
       } else {
         // Load more to append
         state.images = [...state.images, ...action.payload.photos];

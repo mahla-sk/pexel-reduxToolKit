@@ -61,20 +61,23 @@ const Images: React.FC<imageProps> = ({
         )}
       </div>
       <div className="thumbnails">
-        {images.slice(visibleStart, visibleEnd + 1).map((img) => (
-          <div key={img.id} className="thumbnail-wrapper">
-            <img
-              src={img.src.small}
-              onClick={() => dispatch(setMainImg(img))}
-            />
-            <button
-              className="fav-btn"
-              onClick={() => dispatch(toggleFavorite(img))}
-            >
-              ❤️
-            </button>
-          </div>
-        ))}
+        {images.slice(visibleStart, visibleEnd + 1).map((img) => {
+          const isFavorite = favorites.some((fav) => fav.id === img.id);
+          return (
+            <div key={img.id} className="thumbnail-wrapper">
+              <img
+                src={img.src.small}
+                onClick={() => dispatch(setMainImg(img))}
+              />
+              <button
+                className="fav-btn"
+                onClick={() => dispatch(toggleFavorite(img))}
+              >
+                {isFavorite ? "🩶" : "❤️"}
+              </button>
+            </div>
+          );
+        })}
         {images.length < totalResults ? (
           <button className="more" onClick={loadMore}>
             Load More ({totalResults - images.length} left)
@@ -87,7 +90,7 @@ const Images: React.FC<imageProps> = ({
         </button>
         <h3 className="fav-text">Your Favorites</h3>
       </div>
-      {favorites.length > 0 && (
+      {favorites.length > 0 ? (
         <div className="favorites">
           {favorites.map((img) => (
             <div key={img.id} className="fav-wrapper">
@@ -105,6 +108,8 @@ const Images: React.FC<imageProps> = ({
             </div>
           ))}
         </div>
+      ) : (
+        <p className="no-fave">No favorites yet!</p>
       )}
     </div>
   );
