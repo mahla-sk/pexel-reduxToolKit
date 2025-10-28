@@ -98,12 +98,14 @@ body {
   transform: scale(1.05);
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
-.thumbnail-wrapper {
+.thumbnail-wrapper,
+.fav-wrapper {
   position: relative;
   display: inline-block;
 }
 
-.fav-btn {
+.fav-btn,
+.eliminate {
   position: absolute;
   top: 5px;
   right: 5px;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setMainImg, toggleFavorite } from "../imageSlice";
+import { setMainImg, toggleFavorite, deleteImg } from "../imageSlice";
 import type { AppDispatch } from "../store";
 import type { Image } from "../imageSlice";
 import type { RootState } from "../store";
@@ -80,11 +80,19 @@ const Images: React.FC<imageProps> = ({
       {favorites.length > 0 && (
         <div className="favorites">
           {favorites.map((img) => (
-            <img
-              key={img.id}
-              src={img.src.small}
-              onClick={() => dispatch(setMainImg(img))}
-            />
+            <div key={img.id} className="fav-wrapper">
+              <img
+                key={img.id}
+                src={img.src.small}
+                onClick={() => dispatch(setMainImg(img))}
+              />
+              <button
+                className="eliminate"
+                onClick={() => dispatch(deleteImg(img.id))}
+              >
+                ❌
+              </button>
+            </div>
           ))}
         </div>
       )}
