@@ -141,3 +141,12 @@ body {
   color: white;
   background-color: #555e50;
 }
+.text-wrapper {
+  display: flex;
+  flex-direction: row-reverse;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 40px;
+  padding-right: 40px;
+}

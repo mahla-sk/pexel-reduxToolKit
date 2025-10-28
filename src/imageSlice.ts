@@ -85,6 +85,10 @@ const imageSlice = createSlice({
         (img) => img.id !== action.payload
       );
     },
+    unlikedImg(state) {
+      state.favorites = [];
+      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImages.pending, (state) => {
@@ -110,5 +114,6 @@ const imageSlice = createSlice({
   },
 });
 
-export const { setMainImg, toggleFavorite, deleteImg } = imageSlice.actions; //exporting the action creators
+export const { setMainImg, toggleFavorite, deleteImg, unlikedImg } =
+  imageSlice.actions; //exporting the action creators
 export default imageSlice.reducer; //exporting the reducer to be used in the store, its the actual function that changes the state
