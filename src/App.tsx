@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
+import "antd/dist/reset.css";
 import Images from "./components/Images.tsx";
 import SearchBar from "./components/TopBar.tsx";
 import FavoritesPage from "./components/FavoritesPage.tsx";
