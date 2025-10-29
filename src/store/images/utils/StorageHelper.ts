@@ -1,4 +1,4 @@
-import type { Image } from "../imageSlice";
+import type { Image } from "../types";
 
 export const getFave = (): Image[] => {
   const storedFaves = localStorage.getItem("favorites");

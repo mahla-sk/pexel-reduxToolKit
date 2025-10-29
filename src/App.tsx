@@ -4,8 +4,8 @@ import "./App.css";
 import Images from "./components/Images.tsx";
 import SearchBar from "./components/TopBar.tsx";
 import FavoritesPage from "./components/FavoritesPage.tsx";
-import { fetchImages } from "./imageSlice.ts";
-import type { AppDispatch, RootState } from "./store.ts";
+import { fetchImages } from "./store/images/actions.ts";
+import type { AppDispatch, RootState } from "./store/store.ts";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 

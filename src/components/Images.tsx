@@ -5,11 +5,11 @@ import {
   toggleFavorite,
   deleteImg,
   unlikedImg,
-} from "../imageSlice";
-import type { AppDispatch } from "../store";
-import type { Image } from "../imageSlice";
-import type { RootState } from "../store";
-import { fetchImages } from "../imageSlice";
+} from "../store/images/reducers";
+import type { AppDispatch } from "../store/store";
+import type { Image } from "../store/images/types";
+import type { RootState } from "../store/store";
+import { fetchImages } from "../store/images/actions";
 
 interface imageProps {
   images: Image[];
