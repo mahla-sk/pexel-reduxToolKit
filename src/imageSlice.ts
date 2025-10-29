@@ -5,6 +5,8 @@ import {
 } from "@reduxjs/toolkit";
 import axios from "axios";
 
+import { saveFave, getFave, clearFaves } from "./utils/StorageHelper";
+
 export interface Image {
   //defines the img type and what each object contains
   id: number;
@@ -30,7 +32,7 @@ const initialState: ImageState = {
   images: [],
   mainImg: null,
   loading: false,
-  favorites: JSON.parse(localStorage.getItem("favorites") || "[]"),
+  favorites: getFave(), //retrieving favorites from local storage
   totalResults: 0,
   visibleStart: 0,
   visibleEnd: 9,
@@ -76,18 +78,19 @@ const imageSlice = createSlice({
         );
       } else {
         //else add it to favorites
-        state.favorites.push(action.payload);
+        state.favorites = [...state.favorites, action.payload];
       }
-      localStorage.setItem("favorites", JSON.stringify(state.favorites)); //persist favorites in local storage
+      saveFave(state.favorites); //persist favorites in local storage
     },
     deleteImg(state, action: PayloadAction<number>) {
       state.favorites = state.favorites.filter(
         (img) => img.id !== action.payload
       );
+      saveFave(state.favorites); //persist favorites in local storage
     },
     unlikedImg(state) {
       state.favorites = [];
-      localStorage.setItem("favorites", JSON.stringify(state.favorites));
+      clearFaves(); //clear favorites from local storage
     },
   },
   extraReducers: (builder) => {

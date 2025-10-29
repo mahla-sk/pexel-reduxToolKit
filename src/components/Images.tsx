@@ -73,7 +73,7 @@ const Images: React.FC<imageProps> = ({
                 className="fav-btn"
                 onClick={() => dispatch(toggleFavorite(img))}
               >
-                {isFavorite ? "🩶" : "❤️"}
+                {isFavorite ? "❤️" : "🩶"}
               </button>
             </div>
           );

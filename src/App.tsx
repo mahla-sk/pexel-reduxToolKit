@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
-import Images from "./components/images.tsx";
+import Images from "./components/Images.tsx";
 import SearchBar from "./components/TopBar.tsx";
 import FavoritesPage from "./components/FavoritesPage.tsx";
 import { fetchImages } from "./imageSlice.ts";
