@@ -5,7 +5,7 @@ import {
   toggleFavorite,
   deleteImg,
   unlikedImg,
-} from "../store/images/reducers";
+} from "../store/images/slice";
 import type { AppDispatch } from "../store/store";
 import type { Image } from "../store/images/types";
 import type { RootState } from "../store/store";

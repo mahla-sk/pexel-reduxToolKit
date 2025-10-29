@@ -1,13 +1,18 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import { getFromStorage } from "../../utils/StorageHelper";
 import { fetchImages } from "./actions";
+import {
+  clearFavoritesService,
+  deleteFavoriteService,
+  toggleFavoriteService,
+} from "./services";
 import type { Image, ImageState } from "./types";
-import { saveFave, getFave, clearFaves } from "./utils/StorageHelper";
 
 const initialState: ImageState = {
   images: [],
   mainImg: null,
   loading: false,
-  favorites: getFave(), //retrieving favorites from local storage
+  favorites: getFromStorage<Image[]>("favorites", []), //retrieving favorites from local storage
   totalResults: 0,
   visibleStart: 0,
   visibleEnd: 9,
@@ -21,25 +26,13 @@ const imageSlice = createSlice({
       state.mainImg = action.payload;
     },
     toggleFavorite(state, action: PayloadAction<Image>) {
-      const exists = state.favorites.some(
-        (img) => img.id === action.payload.id
-      );
-
-      state.favorites = exists
-        ? state.favorites.filter((img) => img.id !== action.payload.id)
-        : [...state.favorites, action.payload];
-
-      saveFave(state.favorites);
+      state.favorites = toggleFavoriteService(state.favorites, action.payload);
     },
     deleteImg(state, action: PayloadAction<number>) {
-      state.favorites = state.favorites.filter(
-        (img) => img.id !== action.payload
-      );
-      saveFave(state.favorites);
+      state.favorites = deleteFavoriteService(state.favorites, action.payload);
     },
     unlikedImg(state) {
-      state.favorites = [];
-      clearFaves();
+      state.favorites = clearFavoritesService();
     },
   },
   extraReducers: (builder) => {
