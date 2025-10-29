@@ -8,7 +8,35 @@ import FavoritesPage from "./components/FavoritesPage.tsx";
 import { fetchImages } from "./store/images/actions.ts";
 import type { AppDispatch, RootState } from "./store/store.ts";
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  useLocation,
+} from "react-router-dom";
+import { Tabs } from "antd";
+import { HomeOutlined, HeartOutlined } from "@ant-design/icons";
+
+const Nav: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const activeKey = location.pathname === "/favorites" ? "2" : "1";
+
+  return (
+    <div className="nav-tabs-container">
+      <Tabs
+        activeKey={activeKey}
+        onChange={(key) => navigate(key === "1" ? "/" : "/favorites")}
+        items={[
+          { key: "1", label: "Home", icon: <HomeOutlined /> },
+          { key: "2", label: "Favorites", icon: <HeartOutlined /> },
+        ]}
+      />
+    </div>
+  );
+};
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -30,17 +58,12 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        <SearchBar search={search} />
-        <div className="nav-links">
-          <Link to="/" className="nav-btn">
-            Home
-          </Link>
-          <Link to="/favorites" className="nav-btn">
-            Favorites
-          </Link>
+        <div className="top-elements">
+          <SearchBar search={search} />
+          <Nav />
         </div>
-
         <Routes>
+          /
           <Route
             path="/"
             element={
