@@ -11,7 +11,7 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const fetchImagesService = async (query: string, page: number) => {
   const response = await axios.get(
-    `${API_URL}?query=${query}&per_page=10&page=${page}`,
+    `${API_URL}?query=${query}&per_page=80&page=${page}`,
     {
       headers: {
         Authorization: API_KEY,
