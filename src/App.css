@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Pin Sans";
+  src: url("./assets/fonts/Pin-Sans-MacOS-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+* {
+  font-family: "Pin Sans", sans-serif;
+}
 html,
 body {
   margin: 0;
@@ -73,6 +83,9 @@ body {
 .ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
   background-color: #181b16 !important;
 }
+.ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
+  inset-inline-start: -10px;
+}
 
 /* Main image */
 .mainImg {
@@ -144,35 +157,31 @@ body {
   position: absolute;
   top: 5px;
   right: 5px;
-  background: transparent;
+  background: transparent !important;
   border: none;
   cursor: pointer;
   font-size: 18px;
-  color: #bdb395;
   text-shadow: 0 0 3px black;
 }
 
 .favorites {
   color: #bdb395;
-  display: flex;
-  white-space: nowrap;
-  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
   box-sizing: border-box;
   gap: 10px;
-  overflow-x: auto;
-  padding-right: 40px;
-  scroll-padding-right: 40px;
 }
 .favorites-wrapper {
-  padding-left: 220px;
-  padding-right: 220px;
+  padding: 20px 220px;
   overflow: hidden;
 }
 
 .favorites img {
   border-radius: 20px;
   height: 130px;
-  flex-shrink: 0;
+  width: 100%;
+  object-fit: cover;
+  display: block;
 }
 .unlike {
   margin-right: 183px;
@@ -197,18 +206,22 @@ body {
   padding-left: 40px;
 }
 .favorites-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 10px;
-  padding: 20px;
-  margin-top: 20px;
+  column-count: 4;
+  column-gap: 16px;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .favorite-img {
   width: 100%;
-  border-radius: 10px;
+  display: block;
+  margin-bottom: 16px;
+  break-inside: avoid; /* keeps image from being split between columns */
+  border-radius: 12px;
   object-fit: cover;
 }
+
 .nav-links {
   display: flex;
   justify-content: flex-end;
@@ -264,7 +277,12 @@ body {
 .slick-prev:hover {
   background-color: transparent !important;
 }
-
+.ant-carousel .slick-dots li button {
+  background-color: #181b16 !important;
+}
+.ant-carousel .slick-dots-bottom {
+  bottom: -30px !important;
+}
 .top-title,
 .fav-text {
   color: #bdb395;
