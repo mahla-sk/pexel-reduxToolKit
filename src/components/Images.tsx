@@ -138,7 +138,7 @@ const Images: React.FC<imageProps> = ({
                               cursor: "pointer",
                             }}
                           >
-                            {isFavorite ? "❤" : "🩶"}
+                            {isFavorite ? "❤️" : "🩶"}
                           </button>
                         </div>
                       );
