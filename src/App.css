@@ -27,9 +27,26 @@ body {
   min-height: 100vh;
   padding: 20px;
   background-color: #f6f0f0;
-  font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
+.top-container {
+  display: flex;
+  align-items: center;
+}
+.toggle-btn {
+  position: absolute;
+  top: 100px;
+  right: 64px;
+}
+.dark-mode .toggle-btn {
+  background-color: #d5c7a3 !important;
+  color: #181c14;
+  transition: all 0.3s ease;
+}
+.dark-mode button {
+  color: #181c14 !important;
+}
+
 .allImg {
   display: flex;
   flex-direction: column;
@@ -60,8 +77,9 @@ body {
 }
 
 .App button:hover {
-  background-color: #181b16;
+  background-color: #d5c7a3;
 }
+
 .ant-tabs-tab {
   color: #bdb395 !important;
 }
@@ -80,8 +98,17 @@ body {
 .search-bar {
   padding-bottom: 24px;
 }
+.search-bar .ant-input-affix-wrapper:focus,
+.search-bar .ant-input-affix-wrapper.ant-input-affix-wrapper-focused,
+.search-bar .ant-input-affix-wrapper:hover {
+  border-color: #bdb395 !important;
+}
+
 .ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
   background-color: #181b16 !important;
+}
+.dark-mode .ant-btn-variant-solid:not(:disabled):not(.ant-btn-disabled):hover {
+  background-color: #bdb395 !important;
 }
 .ant-input-search > .ant-input-group > .ant-input-group-addon:last-child {
   inset-inline-start: -10px;
@@ -266,6 +293,10 @@ body {
 .slick-prev {
   color: #181b16 !important;
   border: none !important;
+}
+.dark-mode .slick-next,
+.dark-mode .slick-prev {
+  color: #f2e2b1 !important;
 }
 .slick-next {
   right: -25px !important;

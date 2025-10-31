@@ -17,6 +17,8 @@ import {
 } from "react-router-dom";
 import { Tabs } from "antd";
 import { HomeOutlined, HeartOutlined } from "@ant-design/icons";
+import Toggle from "./components/toggle.tsx";
+import { ConfigProvider, theme } from "antd";
 
 const Nav: React.FC = () => {
   const navigate = useNavigate();
@@ -47,6 +49,8 @@ const App: React.FC = () => {
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
 
+  const [darkMode, setDarkMode] = useState(false);
+
   const search = (newQuery: string) => {
     if (newQuery.trim() !== "") {
       setQuery(newQuery);
@@ -56,32 +60,49 @@ const App: React.FC = () => {
   };
 
   return (
-    <Router>
-      <div className="App">
-        <div className="top-elements">
-          <SearchBar search={search} />
-          <Nav />
+    <ConfigProvider
+      theme={{
+        algorithm: darkMode ? theme.darkAlgorithm : theme.defaultAlgorithm,
+      }}
+    >
+      <Router>
+        <div
+          className={`App ${darkMode ? "dark-mode" : ""}`}
+          style={{
+            backgroundColor: darkMode ? "#181C14" : "#f6f0f0",
+            color: darkMode ? "#fff" : "#000",
+            minHeight: "100vh",
+            transition: "all 0.3s ease",
+          }}
+        >
+          <div className="top-elements">
+            <SearchBar search={search} />
+            <div className="top-container">
+              <Nav />
+              <Toggle darkMode={darkMode} setDarkMode={setDarkMode} />
+            </div>
+          </div>
+          <Routes>
+            /
+            <Route
+              path="/"
+              element={
+                <Images
+                  images={images}
+                  mainImg={mainImg}
+                  loading={loading}
+                  totalResults={totalResults}
+                  query={query}
+                  page={page}
+                  setPage={setPage}
+                />
+              }
+            />
+            <Route path="/favorites" element={<FavoritesPage />} />
+          </Routes>
         </div>
-        <Routes>
-          /
-          <Route
-            path="/"
-            element={
-              <Images
-                images={images}
-                mainImg={mainImg}
-                loading={loading}
-                totalResults={totalResults}
-                query={query}
-                page={page}
-                setPage={setPage}
-              />
-            }
-          />
-          <Route path="/favorites" element={<FavoritesPage />} />
-        </Routes>
-      </div>
-    </Router>
+      </Router>
+    </ConfigProvider>
   );
 };
 export default App;
