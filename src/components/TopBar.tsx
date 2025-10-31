@@ -1,5 +1,6 @@
 import React from "react";
 import { Input } from "antd";
+import "../styles/TopBar.css";
 
 const { Search } = Input;
 

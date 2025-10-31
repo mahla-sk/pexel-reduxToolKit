@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import type { RootState } from "../store/store";
 import "../App.css";
+import "../styles/Favorite.css";
 
 const FavoritesPage: React.FC = () => {
   const favorites = useSelector((state: RootState) => state.images.favorites);

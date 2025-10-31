@@ -1,0 +1,21 @@
+.favorites-grid {
+  column-count: 4;
+  column-gap: 16px;
+  padding: 16px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.favorite-img {
+  width: 100%;
+  display: block;
+  margin-bottom: 16px;
+  break-inside: avoid; /* keeps image from being split between columns */
+  border-radius: 12px;
+  object-fit: cover;
+}
+@media (min-width: 375px) and (max-width: 768px) {
+  .favorites-grid {
+    column-gap: 5px;
+  }
+}

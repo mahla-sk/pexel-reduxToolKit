@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setMainImg,
@@ -9,8 +9,8 @@ import {
 import type { AppDispatch } from "../store/store";
 import type { Image } from "../store/images/types";
 import type { RootState } from "../store/store";
-import { fetchImages } from "../store/images/actions";
 import { Carousel } from "antd";
+import "../styles/Home.css";
 
 interface imageProps {
   images: Image[];
@@ -22,50 +22,15 @@ interface imageProps {
   setPage: (page: number) => void;
 }
 
-const Images: React.FC<imageProps> = ({
-  images,
-  mainImg,
-  loading,
-  totalResults,
-  query,
-  page,
-  setPage,
-}) => {
+const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
   const onChange = (currentSlide: number) => {
     // Handle the change of slide here if needed
   };
   const dispatch = useDispatch<AppDispatch>();
   const favorites = useSelector((state: RootState) => state.images.favorites);
 
-  //const [visibleStart, setVisibleStart] = useState(0);
-  //const [visibleEnd, setVisibleEnd] = useState(9);
-
-  {
-    /* const loadMore = () => {
-    if (visibleEnd + 1 < images.length) {
-      // Already fetched
-      setVisibleStart(visibleStart + 10);
-      setVisibleEnd(visibleEnd + 10);
-    } else if (images.length < totalResults && !loading) {
-      // Fetch next page
-      dispatch(fetchImages({ query, page: page + 1 }));
-      setPage(page + 1);
-      // Do not move visibleEnd yet, wait for new images
-    }
-  };*/
-  }
-
   return (
     <div className="allImg">
-      {/*<div className="mainImg">
-        {loading ? (
-          <p>Loading...</p>
-        ) : mainImg ? (
-          <img src={mainImg.src.large} />
-        ) : (
-          <p>No image selected</p>
-        )}
-      </div>*/}
       <h1 className="top-title">Pexels photos </h1>
       <div className="thumbnails">
         {loading ? (
@@ -87,7 +52,8 @@ const Images: React.FC<imageProps> = ({
                 return result;
               };
 
-              const groupedImages = chunkArray(images, 4);
+              const slides = window.innerWidth < 768 ? 1 : 4; // 1 for mobile, 4 for desktop
+              const groupedImages = chunkArray(images, slides);
 
               return groupedImages.map((group, groupIndex) => (
                 <div key={groupIndex}>
@@ -151,12 +117,6 @@ const Images: React.FC<imageProps> = ({
         ) : (
           <p className="no-img">No image selected</p>
         )}
-
-        {/*{images.length < totalResults ? (
-          <button className="more" onClick={loadMore}>
-            +10
-          </button>
-        ) : null}*/}
       </div>
       <div className="text-wrapper">
         <button className="unlike" onClick={() => dispatch(unlikedImg())}>
@@ -190,4 +150,4 @@ const Images: React.FC<imageProps> = ({
     </div>
   );
 };
-export default Images;
+export default Home;

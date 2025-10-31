@@ -1,10 +1,6 @@
 import axios from "axios";
 import type { Image, ImageState } from "./types";
-import {
-  saveToStorage,
-  getFromStorage,
-  clearFromStorage,
-} from "../../utils/StorageHelper";
+import { saveToStorage, clearFromStorage } from "../../utils/StorageHelper";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
