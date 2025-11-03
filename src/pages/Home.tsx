@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setMainImg,
@@ -11,6 +11,7 @@ import type { Image } from "../store/images/types";
 import type { RootState } from "../store/store";
 import { Carousel } from "antd";
 import "../styles/Home.css";
+import ImageModal from "../components/modal";
 
 interface imageProps {
   images: Image[];
@@ -23,15 +24,16 @@ interface imageProps {
 }
 
 const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
-  const onChange = (currentSlide: number) => {
-    // Handle the change of slide here if needed
-  };
   const dispatch = useDispatch<AppDispatch>();
   const favorites = useSelector((state: RootState) => state.images.favorites);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const isDragging = useRef(false);
 
   return (
     <div className="allImg">
-      <h1 className="top-title">Pexels photos </h1>
+      <h1 className="top-title">Pexels photos</h1>
+
       <div className="thumbnails">
         {loading ? (
           <p className="no-img">Loading...</p>
@@ -40,8 +42,11 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
             dots
             arrows
             infinite={false}
-            afterChange={onChange}
             draggable
+            beforeChange={() => (isDragging.current = true)}
+            afterChange={() =>
+              setTimeout(() => (isDragging.current = false), 40)
+            }
           >
             {(() => {
               const chunkArray = (arr: Image[], size: number) => {
@@ -52,7 +57,7 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
                 return result;
               };
 
-              const slides = window.innerWidth < 768 ? 1 : 4; // 1 for mobile, 4 for desktop
+              const slides = window.innerWidth < 768 ? 1 : 4;
               const groupedImages = chunkArray(images, slides);
 
               return groupedImages.map((group, groupIndex) => (
@@ -69,6 +74,7 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
                       const isFavorite = favorites.some(
                         (fav) => fav.id === img.id
                       );
+
                       return (
                         <div
                           key={img.id}
@@ -78,11 +84,18 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
                             width: 332,
                             height: 420,
                             borderRadius: 13,
+                            cursor: "pointer",
+                          }}
+                          onClick={(e) => {
+                            if (!isDragging.current) {
+                              //not to open when scrolling slides
+                              setSelected(img.src.large);
+                              setModalOpen(true);
+                            }
                           }}
                         >
                           <img
                             src={img.src.large}
-                            onClick={() => dispatch(setMainImg(img))}
                             alt={img.id.toString()}
                             style={{
                               width: "100%",
@@ -91,9 +104,13 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
                               borderRadius: 8,
                             }}
                           />
+
                           <button
                             className="fav-btn"
-                            onClick={() => dispatch(toggleFavorite(img))}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              dispatch(toggleFavorite(img));
+                            }}
                             style={{
                               position: "absolute",
                               top: 6,
@@ -118,12 +135,21 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
           <p className="no-img">No image selected</p>
         )}
       </div>
+
+      {/* ✅ Modal OUTSIDE the map (only one instance) */}
+      <ImageModal
+        open={modalOpen}
+        imageUrl={selected}
+        onClose={() => setModalOpen(false)}
+      />
+
       <div className="text-wrapper">
         <button className="unlike" onClick={() => dispatch(unlikedImg())}>
           Unlike all
         </button>
         <h3 className="fav-text">Your Favorites</h3>
       </div>
+
       {favorites.length > 0 ? (
         <div className="favorites-wrapper">
           <div className="favorites">
@@ -150,4 +176,5 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
     </div>
   );
 };
+
 export default Home;

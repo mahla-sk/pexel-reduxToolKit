@@ -58,7 +58,7 @@ const App: React.FC = () => {
                 <Toggle darkMode={darkMode} setDarkMode={setDarkMode} />
               ) : null}
             </div>
-
+            <Nav />
             <div className="top-container">
               {isMobile ? (
                 <Nav>

@@ -37,7 +37,6 @@ body {
 }
 .toggle-btn {
   position: relative;
-  margin-bottom: 25px;
   border-radius: 50px !important;
   width: 20px;
 }
