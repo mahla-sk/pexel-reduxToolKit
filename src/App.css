@@ -37,6 +37,9 @@ body {
 }
 .toggle-btn {
   position: relative;
+  margin-bottom: 25px;
+  border-radius: 50px !important;
+  width: 20px;
 }
 .dark-mode .toggle-btn {
   background-color: #d5c7a3 !important;
@@ -116,4 +119,14 @@ body {
 .top-elements {
   padding-left: 40px;
   padding-right: 40px;
+}
+.top-items {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .toggle-btn {
+    width: auto;
+  }
 }

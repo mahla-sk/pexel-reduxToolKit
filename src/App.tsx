@@ -25,6 +25,7 @@ const App: React.FC = () => {
   const [page, setPage] = useState(1);
 
   const [darkMode, setDarkMode] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
   const search = (newQuery: string) => {
     if (newQuery.trim() !== "") {
@@ -51,10 +52,19 @@ const App: React.FC = () => {
           }}
         >
           <div className="top-elements">
-            <SearchBar search={search} />
+            <div className="top-items">
+              <SearchBar search={search} />
+              {!isMobile ? (
+                <Toggle darkMode={darkMode} setDarkMode={setDarkMode} />
+              ) : null}
+            </div>
+
             <div className="top-container">
-              <Nav />
-              <Toggle darkMode={darkMode} setDarkMode={setDarkMode} />
+              {isMobile ? (
+                <Nav>
+                  <Toggle darkMode={darkMode} setDarkMode={setDarkMode} />
+                </Nav>
+              ) : null}
             </div>
           </div>
           <Routes>
