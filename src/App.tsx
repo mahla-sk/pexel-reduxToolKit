@@ -14,6 +14,7 @@ import { ConfigProvider, theme } from "antd";
 import Nav from "./components/navBar.tsx";
 import "./styles/Home.css";
 import "./styles/Favorite.css";
+import { mobileView } from "./components/mobileView.tsx";
 
 const App: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,7 +26,7 @@ const App: React.FC = () => {
   const [page, setPage] = useState(1);
 
   const [darkMode, setDarkMode] = useState(false);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const isMobile = mobileView();
 
   const search = (newQuery: string) => {
     if (newQuery.trim() !== "") {

@@ -4,6 +4,7 @@ import { HomeOutlined, HeartOutlined, MenuOutlined } from "@ant-design/icons";
 import { Tabs, Drawer, Button, Menu } from "antd";
 import "../styles/TopBar.css";
 import { useState } from "react";
+import { mobileView } from "./mobileView";
 
 interface NavProps {
   children?: React.ReactNode; //so it accepts children
@@ -12,16 +13,10 @@ interface NavProps {
 const Nav: React.FC<NavProps> = ({ children }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const isMobile = mobileView();
 
   const activeKey = location.pathname === "/favorites" ? "2" : "1";
-
-  useEffect(() => {
-    const handleSize = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener("resize", handleSize);
-    return () => window.removeEventListener("resize", handleSize);
-  }, []);
 
   const handleNav = (path: string) => {
     navigate(path);

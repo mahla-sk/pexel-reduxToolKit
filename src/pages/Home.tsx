@@ -136,7 +136,6 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
         )}
       </div>
 
-      {/* ✅ Modal OUTSIDE the map (only one instance) */}
       <ImageModal
         open={modalOpen}
         imageUrl={selected}
