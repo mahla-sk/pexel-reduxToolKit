@@ -6,6 +6,7 @@ export interface Image {
     medium: string;
     large: string;
   };
+  alt: string;
 }
 
 export interface ImageState {

@@ -97,6 +97,7 @@ const Home: React.FC<imageProps> = ({ images, mainImg, loading }) => {
                           <img
                             src={img.src.large}
                             alt={img.id.toString()}
+                            loading="lazy"
                             style={{
                               width: "100%",
                               height: "100%",
