@@ -1,5 +1,3 @@
-import type { Image } from "../store/images/types";
-
 export const getFromStorage = <T>(key: string, defaultValue: T): T => {
   const raw = localStorage.getItem(key);
   return raw ? (JSON.parse(raw) as T) : defaultValue;
