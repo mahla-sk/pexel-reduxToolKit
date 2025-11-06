@@ -30,12 +30,7 @@ body {
   background-color: #f6f0f0;
   box-sizing: border-box;
 }
-.top-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row-reverse;
-}
+
 .toggle-btn {
   position: relative;
   border-radius: 50px !important;

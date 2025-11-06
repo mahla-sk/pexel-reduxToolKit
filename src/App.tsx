@@ -17,7 +17,6 @@ import {
 } from "react-router-dom";
 import Toggle from "./components/toggle.tsx";
 import { ConfigProvider, theme } from "antd";
-import Nav from "./components/navBar.tsx";
 import "./styles/Home.css";
 import "./styles/Favorite.css";
 import { mobileView } from "./components/mobileView.tsx";

@@ -14,7 +14,7 @@
   color: #8b6f27 !important;
 }
 .search-bar {
-  padding-bottom: 24px;
+  padding-bottom: 90px;
   text-align: center;
 }
 .search-bar .ant-input-affix-wrapper:focus,
@@ -61,6 +61,10 @@
   position: relative;
   left: 42%;
 }
+.tabs {
+  position: relative;
+  left: 45%;
+}
 .ant-drawer .ant-drawer-content {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
@@ -100,6 +104,12 @@
 .ant-menu {
   background-color: transparent;
 }
+.desktop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
 @media (min-width: 768px) {
   .nav-tabs-container .ant-tabs {
     margin: 0 auto;
@@ -108,6 +118,7 @@
 @media (max-width: 768px) {
   .search-bar {
     max-width: fit-content;
+    padding-bottom: 80px;
   }
   .nav-tabs-container {
     position: static;
