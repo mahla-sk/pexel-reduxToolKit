@@ -1,17 +1,13 @@
 import axios from "axios";
 import type { Image, ImageState } from "./types";
-import {
-  saveToStorage,
-  getFromStorage,
-  clearFromStorage,
-} from "../../utils/StorageHelper";
+import { saveToStorage, clearFromStorage } from "../../utils/StorageHelper";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const fetchImagesService = async (query: string, page: number) => {
   const response = await axios.get(
-    `${API_URL}?query=${query}&per_page=10&page=${page}`,
+    `${API_URL}?query=${query}&per_page=80&page=${page}`,
     {
       headers: {
         Authorization: API_KEY,
